@@ -1,5 +1,5 @@
 {
-    "name": "synackSA/yii2-cache-data-provider",
+    "name": "synacksa/yii2-cache-data-provider",
     "description": "Extension for Yii2 to have caching for ActiveDataProviders.",
     "type": "yii2-extension",
     "keywords": [
@@ -31,12 +31,9 @@
     "require": {
         "yiisoft/yii2": "*"
     },
-    "require-dev": {
-        "phpunit/phpunit": "4.*"
-    },
     "autoload": {
         "psr-4": {
-            "synacksa\\yii2-cache-data-provider\\": "src"
+            "synacksa\\cachedataprovider\\": "src"
         }
     },
     "extra": {
