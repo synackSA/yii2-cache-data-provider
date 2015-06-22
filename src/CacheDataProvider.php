@@ -45,9 +45,6 @@ class CacheDataProvider extends \yii\data\ActiveDataProvider
      */
     protected function prepareTotalCount()
     {
-        if(!$this->cache){
-            return parent::prepareTotalCount();
-        }
         if (!$this->query instanceof QueryInterface) {
             throw new InvalidConfigException('The "query" property must be an instance of a class that implements the QueryInterface e.g. yii\db\Query or its subclasses.');
         }
