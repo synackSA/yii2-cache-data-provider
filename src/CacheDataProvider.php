@@ -22,7 +22,7 @@ class CacheDataProvider extends \yii\data\ActiveDataProvider
      */
     public function getCacheLength()
     {
-        return (int) ArrayHelper::getValue($this->cache, 'length');
+        return ArrayHelper::getValue($this->cache, 'length');
     }
 
     /**
