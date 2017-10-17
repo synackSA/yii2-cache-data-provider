@@ -2,11 +2,44 @@
 
 namespace synacksa\cachedataprovider;
 
+use Yii;
 use yii\db\QueryInterface;
 use yii\base\InvalidConfigException;
+use yii\helpers\ArrayHelper;
 
 class CacheDataProvider extends \yii\data\ActiveDataProvider
 {
+    /**
+     * @var array The caching length and dependency object
+     */
+    public $cache = [
+        'length' => null,
+        'dependency' => null,
+    ];
+
+    /**
+     * @return int The length the cache should be valid for
+     */
+    public function getCacheLength()
+    {
+        return (int) ArrayHelper::getValue($this->cache, 'length');
+    }
+
+    /**
+     * Created the dependency if it is formatted as an array
+     * Otherwise it will return the value
+     * @return mixed the dependency
+     */
+    public function getCacheDependency()
+    {
+        $dependency = ArrayHelper::getValue($this->cache, 'dependency');
+
+        if (is_array($dependency)) {
+            return Yii::createObject($dependency);
+        }
+
+        return $dependency;
+    }
 
     /**
      * @inheritdoc
@@ -37,7 +70,7 @@ class CacheDataProvider extends \yii\data\ActiveDataProvider
 
         return \Yii::$app->db->cache(function ($db) use ($query) {
             return $query->all($db);
-        });
+        }, $this->cacheLength, $this->cacheDependency);
     }
 
     /**
@@ -58,7 +91,7 @@ class CacheDataProvider extends \yii\data\ActiveDataProvider
 
         return $db->cache(function($db) use($query){
             return (int) $query->limit(-1)->offset(-1)->orderBy([])->count('*', $db);
-        });
+        }, $this->cacheLength, $this->cacheDependency);
     }
 }
 
