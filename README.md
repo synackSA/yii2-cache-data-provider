@@ -33,7 +33,7 @@ use synacksa\cachedataprovider\CacheDataProvider;
 $dataProvider = new CacheDataProvider([
     // optional caching options
     'cache' => [
-        'length' => 3600,
+        'duration' => 3600,
         'dependency' => [
             'class' => 'yii\caching\DbDependency',
             'sql' => 'SELECT max("updated_at") FROM "posts"',

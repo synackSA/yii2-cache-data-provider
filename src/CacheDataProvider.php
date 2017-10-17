@@ -10,19 +10,19 @@ use yii\helpers\ArrayHelper;
 class CacheDataProvider extends \yii\data\ActiveDataProvider
 {
     /**
-     * @var array The caching length and dependency object
+     * @var array The caching duration and dependency object
      */
     public $cache = [
-        'length' => null,
+        'duration' => null,
         'dependency' => null,
     ];
 
     /**
-     * @return int The length the cache should be valid for
+     * @return int The duration the cache should be valid for
      */
-    public function getCacheLength()
+    public function getCacheDuration()
     {
-        return ArrayHelper::getValue($this->cache, 'length');
+        return ArrayHelper::getValue($this->cache, 'duration');
     }
 
     /**
@@ -70,7 +70,7 @@ class CacheDataProvider extends \yii\data\ActiveDataProvider
 
         return \Yii::$app->db->cache(function ($db) use ($query) {
             return $query->all($db);
-        }, $this->cacheLength, $this->cacheDependency);
+        }, $this->cacheDuration, $this->cacheDependency);
     }
 
     /**
@@ -91,7 +91,7 @@ class CacheDataProvider extends \yii\data\ActiveDataProvider
 
         return $db->cache(function($db) use($query){
             return (int) $query->limit(-1)->offset(-1)->orderBy([])->count('*', $db);
-        }, $this->cacheLength, $this->cacheDependency);
+        }, $this->cacheDuration, $this->cacheDependency);
     }
 }
 
